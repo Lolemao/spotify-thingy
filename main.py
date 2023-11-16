@@ -9,14 +9,12 @@ def _download_audio(link, path = None):
     if vid is None:
         raise ValueError
     
-    
     downloaded = vid.download(filename=yt.title+".mp3", output_path=path)
-    
-    print(vid)
+    return vid.title
 
     # vid = yt.streams.filter(abr = "160kbps", progressive= False).last().download()
 
-def download_audio(link, max_tries, dir):
+def download_audio(link, max_tries, dir = (os.curdir + '/Songs')):
     curr = 0
     if max_tries > 0:
         max_tries = max_tries
@@ -25,15 +23,15 @@ def download_audio(link, max_tries, dir):
 
     while curr < max_tries:
         try:
-            _download_audio(link, dir)
-            break
+            return _download_audio(link, dir)
+            
         except: 
             curr += 1
     
 
 if __name__ == "__main__":
     link = "https://www.youtube.com/watch?v=MxEjnYdfLXU"
-    dir = '\cool'
+    dir = '/Songs'
     curr_path = os.curdir + dir
     max_tries = 3
     download_audio(link, max_tries,curr_path)
